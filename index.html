@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Структури даних у Python: Списки та Матриці (10 клас)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#035485',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .code-block {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="bg-brand-600 text-white p-2 rounded-xl shadow-md">
+                        <i class="fa-solid fa-code text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-slate-900 text-lg leading-tight">Python: Списки та Матриці</h1>
+                        <p class="text-xs text-slate-500 font-medium">Інтерактивний навчальний модуль • 10 клас</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="flex gap-1 bg-slate-100 p-1 rounded-xl text-sm font-medium">
+                    <button onclick="switchTab('theory')" id="tab-theory" class="tab-btn px-4 py-2 rounded-lg transition-all text-brand-600 bg-white shadow-sm">
+                        <i class="fa-solid fa-book-open mr-2"></i>Теорія
+                    </button>
+                    <button onclick="switchTab('stem')" id="tab-stem" class="tab-btn px-4 py-2 rounded-lg transition-all text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-laptop-code mr-2"></i>STEM-Завдання
+                    </button>
+                    <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn px-4 py-2 rounded-lg transition-all text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-list-check mr-2"></i>Тестування
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- SECTION 1: THEORY -->
+        <section id="section-theory" class="space-y-8">
+            <!-- Intro Banner -->
+            <div class="bg-gradient-to-r from-sky-600 to-indigo-700 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+                <div class="max-w-3xl">
+                    <span class="inline-block bg-white/20 backdrop-blur-md text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-3">Модуль 1. Структури даних</span>
+                    <h2 class="text-3xl font-extrabold tracking-tight mb-2">Від баз даних до двовимірних матриць</h2>
+                    <p class="text-sky-100 text-base leading-relaxed">
+                        Дізнайтеся, як зберігати, обробляти та аналізувати впорядковані колекції даних у Python: від одновимірних списків-потягів до двовимірних матриць-будинків.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Theory Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Card 1: Що таке список -->
+                <div class="glass-panel p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold">1</div>
+                        <h3 class="text-xl font-bold text-slate-900">Що таке список (List)?</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4">
+                        <strong>Список</strong> — це впорядкований контейнер для зберігання послідовності об'єктів під одним іменем.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-200/80 mb-4">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> <strong>Квадратні дужки:</strong> Синтаксис <code>[1, 2, 3]</code></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> <strong>Різні типи даних:</strong> Числа, рядки, дроби в одному списку</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> <strong>Змінюваність:</strong> Елементи можна редагувати після створення</li>
+                    </ul>
+                    <div class="code-block p-3 rounded-lg font-mono text-xs">
+                        <span class="text-slate-400"># Приклад створення списку</span><br>
+                        data = [<span class="text-amber-400">5</span>, <span class="text-emerald-400">'Кіт'</span>, <span class="text-amber-400">3.14</span>]
+                    </div>
+                </div>
+
+                <!-- Card 2: Способи створення -->
+                <div class="glass-panel p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold">2</div>
+                        <h3 class="text-xl font-bold text-slate-900">Три шляхи створення списку</h3>
+                    </div>
+                    <div class="space-y-3 font-mono text-xs">
+                        <div class="bg-slate-900 p-3 rounded-lg text-slate-200 border border-slate-700">
+                            <span class="text-sky-400">a = []</span> <span class="text-slate-500"># 1. Порожній список</span>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-lg text-slate-200 border border-slate-700">
+                            <span class="text-sky-400">nums = [5, 10, 15]</span> <span class="text-slate-500"># 2. Із готовими даними</span>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-lg text-slate-200 border border-slate-700">
+                            <span class="text-sky-400">a = [i for i in range(5)]</span> <span class="text-slate-500"># 3. Генератором (ListComp)</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 text-xs mt-4">
+                        <i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i>
+                        Генератори списків дозволяють створювати нові масиви усього в один рядок коду!
+                    </p>
+                </div>
+
+                <!-- Card 3: Нумерація та Індекси -->
+                <div class="glass-panel p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold">3</div>
+                        <h3 class="text-xl font-bold text-slate-900">Анатомія списку: Індекси</h3>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 text-amber-800 text-xs p-3 rounded-xl mb-4 flex items-start gap-2">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600 mt-0.5"></i>
+                        <span><strong>Важливо!</strong> Індексація завжди починається з нуля (0). Перший елемент — це <code>index 0</code>. Від'ємні індекси відраховують з кінця (-1).</span>
+                    </div>
+                    <div class="code-block p-4 rounded-xl font-mono text-xs space-y-1">
+                        <p><span class="text-purple-400">animals</span> = [<span class="text-emerald-300">'Кіт'</span>, <span class="text-emerald-300">'Собака'</span>, <span class="text-emerald-300">'Миша'</span>, <span class="text-emerald-300">'Хом'як'</span>]</p>
+                        <p class="text-slate-400">#  Індекси:   0         1         2          3</p>
+                        <p class="text-slate-400"># Вд'ємні:   -4        -3        -2         -1</p>
+                        <hr class="border-slate-700 my-2">
+                        <p><span class="text-sky-400">print</span>(animals[<span class="text-amber-400">0</span>]) <span class="text-slate-500"># Виведе: Кіт</span></p>
+                        <p><span class="text-sky-400">print</span>(animals[-<span class="text-amber-400">1</span>]) <span class="text-slate-500"># Виведе: Хом'як</span></p>
+                        <p><span class="text-sky-400">print</span>(<span class="text-sky-400">len</span>(animals)) <span class="text-slate-500"># Довжина: 4</span></p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Методи та операції -->
+                <div class="glass-panel p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold">4</div>
+                        <h3 class="text-xl font-bold text-slate-900">Основні методи та функції</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-xs font-mono mb-4">
+                        <div class="bg-slate-100 p-2.5 rounded-lg"><strong>.append(x)</strong> — додати в кінець</div>
+                        <div class="bg-slate-100 p-2.5 rounded-lg"><strong>.pop(i)</strong> — вилучити за індексом</div>
+                        <div class="bg-slate-100 p-2.5 rounded-lg"><strong>.remove(x)</strong> — вилучити за значенням</div>
+                        <div class="bg-slate-100 p-2.5 rounded-lg"><strong>.clear()</strong> — очистити список</div>
+                    </div>
+                    <div class="p-3 bg-sky-50 border border-sky-200 rounded-xl text-xs text-sky-900">
+                        <strong>Функції над списками:</strong>
+                        <ul class="list-disc list-inside mt-1 space-y-0.5 font-mono">
+                            <li>sum(a) — сума елементів</li>
+                            <li>min(a) / max(a) — найменше/найбільше</li>
+                            <li>sorted(a) — відсортований новий список</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card 5: Двовимірні масиви (Матриці) -->
+                <div class="glass-panel p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold">5</div>
+                        <h3 class="text-xl font-bold text-slate-900">Двовимірні масиви (Матриці / Таблиці)</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <p class="text-slate-600 text-sm mb-3">
+                                У Python немає окремого типу даних «матриця». Таблиця реалізується як <strong>список списків (List of Lists)</strong>.
+                            </p>
+                            <div class="code-block p-4 rounded-xl font-mono text-xs space-y-2">
+                                <p class="text-slate-400"># Створення таблиці 2х3 (2 рядки, 3 стовпчики):</p>
+                                <p>table = [</p>
+                                <p class="pl-4">[<span class="text-amber-400">1</span>, <span class="text-amber-400">7</span>, <span class="text-amber-400">17</span>], <span class="text-slate-500"># рядок 0</span></p>
+                                <p class="pl-4">[<span class="text-amber-400">8</span>, <span class="text-amber-400">18</span>, <span class="text-amber-400">19</span>]  <span class="text-slate-500"># рядок 1</span></p>
+                                <p>]</p>
+                                <hr class="border-slate-700">
+                                <p class="text-emerald-400"># Звернення: table[ряд][стовпчик]</p>
+                                <p><span class="text-sky-400">print</span>(table[<span class="text-amber-400">1</span>][<span class="text-amber-400">2</span>]) <span class="text-slate-500"># Отримаємо 19</span></p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl text-white font-mono text-xs">
+                            <p class="text-sky-400 font-bold mb-2">// Обхід двовимірної таблиці вкладеними циклами:</p>
+                            <div class="space-y-1">
+                                <p><span class="text-purple-400">for</span> row <span class="text-purple-400">in</span> table:</p>
+                                <p class="pl-4"><span class="text-purple-400">for</span> cell <span class="text-purple-400">in</span> row:</p>
+                                <p class="pl-8"><span class="text-sky-400">print</span>(cell, end=<span class="text-emerald-300">' '</span>)</p>
+                                <p class="pl-4"><span class="text-sky-400">print</span>() <span class="text-slate-500"># Перехід на новий рядок</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: STEM TASK -->
+        <section id="section-stem" class="hidden space-y-6">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="p-3 bg-emerald-100 text-emerald-700 rounded-xl"><i class="fa-solid fa-seedling text-2xl"></i></span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">STEM-Завдання: Аналітика Smart-Теплиці</h2>
+                        <p class="text-slate-500 text-sm">Приклад застосування списків у реальнй інженерії та агротехнологіях</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 text-sm text-slate-700 space-y-2">
+                    <p><strong>Контекст:</strong> Датчики розумної теплиці фіксували температуру повітря щогодини протягом доби. Результати записані у список Python.</p>
+                    <p><strong>Ваше завдання:</strong></p>
+                    <ol class="list-decimal list-inside space-y-1 font-medium text-slate-800">
+                        <li>Знайти середню температуру за добу.</li>
+                        <li>Визначити максимальну та мінімальну температуру.</li>
+                        <li>Порахувати кількість годин, коли температура перевищувала поріг у +22°C.</li>
+                    </ol>
+                </div>
+
+                <!-- Code Sandbox -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-semibold text-slate-600 uppercase tracking-wider">Редактор коду Python</label>
+                        <button onclick="runStemCode()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-1.5 rounded-lg text-sm flex items-center gap-2 shadow-sm transition-all">
+                            <i class="fa-solid fa-play"></i> Запустити код
+                        </button>
+                    </div>
+
+                    <textarea id="stem-code-input" class="w-full h-48 font-mono text-xs bg-slate-900 text-emerald-400 p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner"># Почасові виміри температури (°C)
+temps = [16.5, 15.8, 15.2, 14.9, 15.0, 16.2, 18.5, 20.1, 22.4, 23.8, 25.1, 25.5, 24.8, 23.9, 22.1, 21.0, 19.8, 18.2, 17.5, 17.0, 16.8, 16.4, 16.0, 15.7]
+
+# 1. Середня температура
+avg_temp = round(sum(temps) / len(temps), 2)
+
+# 2. Максимум та Мінімум
+max_temp = max(temps)
+min_temp = min(temps)
+
+# 3. Кількість годин вище 22°C
+warm_hours = sum(1 for t in temps if t > 22.0)
+
+print(f"Середня температура: {avg_temp} °C")
+print(f"Максимальна: {max_temp} °C, Мінімальна: {min_temp} °C")
+print(f"Годин із температурою > 22°C: {warm_hours} год.")</textarea>
+
+                    <div>
+                        <label class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">Результат виконання (Консоль):</label>
+                        <div id="stem-output" class="bg-slate-900 text-slate-200 font-mono text-xs p-4 rounded-xl min-h-[80px] border border-slate-800">
+                            Натисніть "Запустити код" для симуляції виконання...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: QUIZ -->
+        <section id="section-quiz" class="hidden space-y-6">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Інтерактивний Тест</h2>
+                        <p class="text-slate-500 text-sm">Перевірте свої знання зі списків та матриць у Python</p>
+                    </div>
+                    <div id="quiz-score-badge" class="hidden bg-brand-50 border border-brand-200 text-brand-700 px-4 py-2 rounded-xl text-center">
+                        <span class="text-xs uppercase font-bold block">Ваш результат</span>
+                        <span id="score-text" class="text-xl font-extrabold">0 / 8</span>
+                    </div>
+                </div>
+
+                <form id="quiz-form" class="space-y-6">
+                    <!-- Q1 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <p class="font-semibold text-slate-800 text-sm mb-3">1. З якого індексу починається нумерація елементів списку в Python?</p>
+                        <div class="space-y-2 text-sm">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="0"> 0</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="1"> 1</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="-1"> -1</label>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <p class="font-semibold text-slate-800 text-sm mb-3">2. Який метод використовується для додавання елемента в кінець списку?</p>
+                        <div class="space-y-2 text-sm">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="add"> .add()</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="append"> .append()</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="push"> .push()</label>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <p class="font-semibold text-slate-800 text-sm mb-3">3. Що поверне вираз <code>len([10, 20, 30, 40])</code>?</p>
+                        <div class="space-y-2 text-sm">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="3"> 3</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="4"> 4</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="100"> 100</label>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <p class="font-semibold text-slate-800 text-sm mb-3">4. Як отримати елемент <code>19</code> із матриці <code>table = [[1, 7, 17], [8, 18, 19]]</code>?</p>
+                        <div class="space-y-2 text-sm">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4" value="a"> table[1][2]</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4" value="b"> table[2][1]</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4" value="c"> table[0][2]</label>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="checkQuiz()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-md transition-all">
+                        Завершити тест та перевірити
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>Навчальний інтерактивний сайт з інформатики для 10 класу • Розроблено для розміщення на GitHub Pages</p>
+            <p class="text-slate-600">Open Source Educational Project • Python Lists & Matrices</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow-sm', 'text-brand-600');
+                btn.classList.add('text-slate-600');
+            });
+
+            document.getElementById('section-' + tabName).classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-' + tabName);
+            activeBtn.classList.add('bg-white', 'shadow-sm', 'text-brand-600');
+            activeBtn.classList.remove('text-slate-600');
+        }
+
+        function runStemCode() {
+            const output = document.getElementById('stem-output');
+            output.innerHTML = `<span class="text-emerald-400">Середня температура: 19.17 °C</span><br>` +
+                               `<span class="text-emerald-400">Максимальна: 25.5 °C, Мінімальна: 14.9 °C</span><br>` +
+                               `<span class="text-emerald-400">Годин із температурою > 22°C: 6 год.</span><br>` +
+                               `<span class="text-slate-500">[Програму виконано успішно]</span>`;
+        }
+
+        function checkQuiz() {
+            const answers = { q1: '0', q2: 'append', q3: '4', q4: 'a' };
+            let score = 0;
+            let total = 4;
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const scoreBadge = document.getElementById('quiz-score-badge');
+            const scoreText = document.getElementById('score-text');
+            scoreBadge.classList.remove('hidden');
+            scoreText.textContent = `${score} / ${total}`;
+            
+            alert(`Ваш результат: ${score} з ${total} правильних відповідей!`);
+        }
+    </script>
+</body>
+</html>
